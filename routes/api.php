@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +17,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('/detect-character', function (Request $request) {
+    $request->validate([
+        'file' => 'required|file|mimes:wav'
+    ]);
+
+    $file = $request->file('file');
+
+    $res = Http::attach('file', file_get_contents($file), 'test.wav')->post(env('PYTHON_HOST'));
+
+    if ($res->body() === 'ظ') {
+        return 'bravo';
+    }
+
+    return 'try again!';
 });
