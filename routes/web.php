@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\LetterController;
+use App\Http\Controllers\LetterExerciseController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,8 +26,14 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified', 'admin'])->name('dashboard');
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'admin']], function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->middleware(['auth', 'verified', 'admin'])->name('dashboard');
+
+    Route::resource('letters', LetterController::class)->only(['index', 'create', 'store']);
+    Route::resource('letters.exercises', LetterExerciseController::class);
+});
 
 require __DIR__ . '/auth.php';

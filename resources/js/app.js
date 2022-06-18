@@ -5,6 +5,7 @@ import vuetify from '@/plugins/vuetify'
 import store from '@/store'
 import i18n from '@/i18n'
 import AdminLayout from '@/layouts/AdminLayout'
+import helpers from '@/plugins/helpers'
 
 require('./bootstrap')
 
@@ -13,13 +14,18 @@ InertiaProgress.init({ color: '#4B5563' })
 
 createInertiaApp({
   title: (title) => `${title} - ${appName}`,
-  resolve: (name) => {
-    const page = require(`./pages/${name}.vue`)
-    page.layout = page.layout || AdminLayout
+  resolve: name => import(`./pages/${name}`).then(({ default: page }) => {
+    page.layout = page.layout === undefined ? AdminLayout : page.layout
     return page
-  },
-  setup ({ el, App, props, plugin }) {
+  }),
+  setup ({
+    el,
+    App,
+    props,
+    plugin,
+  }) {
     Vue.use(plugin)
+    Vue.use(helpers)
 
     Vue.mixin({ methods: { route } })
 

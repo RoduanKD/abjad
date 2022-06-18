@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('exercises', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->json('question');
+            $table->string('question');
             $table->json('attributes')->nullable();
             $table->foreignId('letter_id');
             $table->timestamps();

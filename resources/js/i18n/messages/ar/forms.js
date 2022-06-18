@@ -12,9 +12,9 @@ export default {
     select: 'اختيار',
   },
   titles: {
-    new: 'جديد{0}',
-    edit: 'تعديل {0}',
-    options: 'خيارات {0}',
+    new: '{0} جديد',
+    edit: '{0} تعديل',
+    options: '{0} خيارات',
   },
   columns: {
     name: 'الاسم',
@@ -25,6 +25,14 @@ export default {
     actions: 'خيارات',
     type: 'نوع',
     logo: 'لوغو',
+    text: 'نص',
+    image: 'صورة',
+    video_url: 'رابط الفيديو',
+    question: {
+      text: 'نص السؤال',
+      voice: 'تسجيل السؤال',
+      image: 'صورة السؤال',
+    },
   },
   option: 'خيار',
 }
