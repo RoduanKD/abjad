@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\LetterController;
+use App\Http\Controllers\Api\LetterExerciseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -24,9 +26,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
 
+Route::group([
+    // 'middleware' => 'auth:sanctum',
+], function () {
+    Route::apiResource('letters', LetterController::class)->only(['index']);
+    Route::apiResource('letters.exercises', LetterExerciseController::class);
+});
+
 Route::post('/detect-character', function (Request $request) {
     $request->validate([
-        'file' => 'required|file|mimes:wav'
+        'file' => 'required|file|mimes:wav',
     ]);
 
     $file = $request->file('file');

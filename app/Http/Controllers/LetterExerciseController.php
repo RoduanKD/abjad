@@ -57,7 +57,7 @@ class LetterExerciseController extends Controller
             'attributes.correct_choice_index' => 'required_if:type,multiple_choice|prohibited_unless:type,multiple_choice|numeric|max:2',
             'attributes.choices'              => 'required_if:type,multiple_choice|array|size:3',
             'attributes.choices.*.text'       => 'required_if:type,multiple_choice|prohibited_unless:type,multiple_choice|string|max:255',
-            'attributes.choices.*.image'      => 'required_if:type,multiple_choice|prohibited_unless:type,multiple_choice|image',
+            'attributes.choices.*.image'      => 'prohibited_unless:type,multiple_choice|image|nullable',
 
             'attributes.recordings'         => 'required_if:type,listen_and_repeat|array|size:4',
             'attributes.recordings.*.text'  => 'required_if:type,listen_and_repeat|max:255',
@@ -90,10 +90,9 @@ class LetterExerciseController extends Controller
         if ($request->file('question.image'))
             $exercise->addMediaFromRequest('question.image')->toMediaCollection('question-image');
 
-        if ($request->type === ExerciseType::MultipleChoice->value)
-            $exercise->addMultipleMediaFromRequest(['attributes.choices.0.image', 'attributes.choices.1.image', 'attributes.choices.2.image'])->each(function ($adder) {
-                $adder->toMediaCollection('choices');
-            });
+        for ($i = 0; $i < count($request->get('attributes')['choices']); $i++)
+            if ($request->type === ExerciseType::MultipleChoice->value && $request->file("attributes.choices.$i.image"))
+                $exercise->addMediaFromRequest("attributes.choices.$i.image")->withCustomProperties(['index' => $i])->toMediaCollection('choices');
 
         if ($request->type === ExerciseType::ListenAndRepeat->value)
             $exercise->addMultipleMediaFromRequest(['attributes.recordings.0.voice', 'attributes.recordings.1.voice', 'attributes.recordings.2.voice', 'attributes.recordings.3.voice'])->each(function ($adder) {

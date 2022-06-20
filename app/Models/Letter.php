@@ -15,4 +15,9 @@ class Letter extends Model
     {
         return $this->hasMany(Exercise::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'value';
+    }
 }
