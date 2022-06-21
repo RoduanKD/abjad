@@ -42,9 +42,5 @@ Route::post('/detect-character', function (Request $request) {
 
     $res = Http::attach('file', file_get_contents($file), 'test.wav')->post(env('PYTHON_HOST'));
 
-    if ($res->body() === 'ظ') {
-        return 'bravo';
-    }
-
-    return 'try again!';
+    return $res->body();
 });
