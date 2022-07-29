@@ -27,7 +27,7 @@ Route::post('login', [LoginController::class, 'login']);
 Route::post('register', [RegisterController::class, 'register']);
 
 Route::group([
-    // 'middleware' => 'auth:sanctum',
+    'middleware' => 'auth:sanctum',
 ], function () {
     Route::apiResource('letters', LetterController::class)->only(['index']);
     Route::apiResource('letters.exercises', LetterExerciseController::class);
