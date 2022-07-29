@@ -51,13 +51,13 @@ class LetterExerciseController extends Controller
             'question.voice' => 'required|mimes:mp3,wav',
             'question.image' => 'nullable|image',
 
-            'attributes'           => 'required|array',
+            'attributes'           => 'required_if:type:video_tutorial,multiple_choice,listen_and_repeat|array',
             'attributes.video_url' => 'required_if:type,video_tutorial|url|nullable',
 
-            'attributes.correct_choice_index' => 'required_if:type,multiple_choice|prohibited_unless:type,multiple_choice|numeric|max:2',
+            'attributes.correct_choice_index' => 'required_if:type,multiple_choice|prohibited_unless:type,multiple_choice,draw_letter|numeric|max:2',
             'attributes.choices'              => 'required_if:type,multiple_choice|array|size:3',
-            'attributes.choices.*.text'       => 'required_if:type,multiple_choice|prohibited_unless:type,multiple_choice|string|max:255',
-            'attributes.choices.*.image'      => 'prohibited_unless:type,multiple_choice|image|nullable',
+            'attributes.choices.*.text'       => 'required_if:type,multiple_choice|prohibited_unless:type,multiple_choice,draw_letter|string|max:255',
+            'attributes.choices.*.image'      => 'prohibited_unless:type,multiple_choice,draw_letter|image|nullable',
 
             'attributes.recordings'         => 'required_if:type,listen_and_repeat|array|size:4',
             'attributes.recordings.*.text'  => 'required_if:type,listen_and_repeat|max:255',
@@ -90,9 +90,11 @@ class LetterExerciseController extends Controller
         if ($request->file('question.image'))
             $exercise->addMediaFromRequest('question.image')->toMediaCollection('question-image');
 
-        for ($i = 0; $i < count($request->get('attributes')['choices']); $i++)
-            if ($request->type === ExerciseType::MultipleChoice->value && $request->file("attributes.choices.$i.image"))
-                $exercise->addMediaFromRequest("attributes.choices.$i.image")->withCustomProperties(['index' => $i])->toMediaCollection('choices');
+        if ($request->filled('attributes')) {
+            for ($i = 0; $i < count($request->get('attributes')['choices']); $i++)
+                if ($request->type === ExerciseType::MultipleChoice->value && $request->file("attributes.choices.$i.image"))
+                    $exercise->addMediaFromRequest("attributes.choices.$i.image")->withCustomProperties(['index' => $i])->toMediaCollection('choices');
+        }
 
         if ($request->type === ExerciseType::ListenAndRepeat->value)
             $exercise->addMultipleMediaFromRequest(['attributes.recordings.0.voice', 'attributes.recordings.1.voice', 'attributes.recordings.2.voice', 'attributes.recordings.3.voice'])->each(function ($adder) {

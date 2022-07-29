@@ -47,7 +47,7 @@
                 />
               </v-col>
               <v-col
-                v-if="form.type === 'multiple_choice'"
+                v-if="form.type === 'multiple_choice' || form.type === 'draw_letter'"
                 cols="12"
                 sm="4"
               >
@@ -55,6 +55,7 @@
                   v-model="form.question.image"
                   :label="$t('forms.columns.question.image')"
                   :error-messages="errors['question.image']"
+                  accept="image/png,image/jpg"
                 />
               </v-col>
               <v-col cols="12">
@@ -243,6 +244,7 @@ export default {
               text: data.question.text,
               voice: data.question.voice,
             },
+            attributes: [],
           }
 
           if (data.type === 'listen_and_repeat') {
@@ -260,6 +262,12 @@ export default {
             payload.attributes = {
               correct_choice_index: data.attributes.correct_choice_index,
               choices: data.attributes.choices,
+            }
+          }
+
+          if (data.type === 'draw_letter') {
+            if (data.question.image) {
+              payload.question.image = data.question.image
             }
           }
 
