@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -16,6 +17,11 @@ class Exercise extends Model implements HasMedia
     protected $casts = [
         'attributes' => 'array',
     ];
+
+    public function correctChoice(): Attribute
+    {
+        return Attribute::get(fn() => json_decode($this->attributes['attributes'])->choices[json_decode($this->attributes['attributes'])->correct_choice_index]);
+    }
 
     public function registerMediaCollections(): void
     {

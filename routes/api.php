@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\LetterController;
 use App\Http\Controllers\Api\LetterExerciseController;
+use App\Http\Controllers\SubmissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,7 @@ Route::group([
 ], function () {
     Route::apiResource('letters', LetterController::class)->only(['index']);
     Route::apiResource('letters.exercises', LetterExerciseController::class);
+    Route::post('exercises/{exercise}/submissions', [SubmissionController::class, 'store']);
 });
 
 Route::post('/detect-character', function (Request $request) {
