@@ -94,6 +94,11 @@ export default {
               link: 'dashboard',
               icon: 'mdi-view-dashboard',
             },
+            {
+              text: this.$t('comps.letter.p'),
+              link: 'letters.index',
+              icon: 'mdi-abjad-arabic',
+            },
           ],
         },
       ],
