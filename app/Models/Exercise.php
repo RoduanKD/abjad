@@ -19,11 +19,15 @@ class Exercise extends Model implements HasMedia
         'attributes' => 'array',
     ];
 
+    public function letter()
+    {
+        return $this->belongsTo(Letter::class);
+    }
+
     public function type(): Attribute
     {
         return Attribute::get(fn() => ExerciseType::from($this->attributes['type']));
     }
-
 
     public function correctChoice(): Attribute
     {
