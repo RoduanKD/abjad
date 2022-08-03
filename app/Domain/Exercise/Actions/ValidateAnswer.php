@@ -6,7 +6,7 @@ use App\Models\Exercise;
 
 abstract class ValidateAnswer
 {
-    public function __construct(protected Exercise $exercise)
+    public function __construct(protected Exercise $exercise, protected array $extra_data = [])
     {
     }
 }

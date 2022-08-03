@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ExerciseType;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,9 +19,20 @@ class Exercise extends Model implements HasMedia
         'attributes' => 'array',
     ];
 
+    public function type(): Attribute
+    {
+        return Attribute::get(fn() => ExerciseType::from($this->attributes['type']));
+    }
+
+
     public function correctChoice(): Attribute
     {
         return Attribute::get(fn() => json_decode($this->attributes['attributes'])->choices[json_decode($this->attributes['attributes'])->correct_choice_index]);
+    }
+
+    public function recordings(): Attribute
+    {
+        return Attribute::get(fn() => collect(json_decode($this->attributes['attributes'])->recordings));
     }
 
     public function registerMediaCollections(): void

@@ -84,6 +84,7 @@ class LetterExerciseController extends Controller
             default => [],
         };
 
+        /* @var \App\Models\Exercise $exercise */
         $exercise = $letter->exercises()->create($data);
 
         $exercise->addMediaFromRequest('question.voice')->toMediaCollection('question-voice');

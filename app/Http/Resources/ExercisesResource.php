@@ -27,12 +27,12 @@ class ExercisesResource extends JsonResource
         ];
 
         $data['attributes'] = match ($this->type) {
-            ExerciseType::MultipleChoice->value => [
+            ExerciseType::MultipleChoice => [
                 'correct_choice_index' => $this->attributes['correct_choice_index'],
                 'choices'              => Arr::map($this->attributes['choices'], fn($choice, $i) => ['text' => $choice, 'image' => Arr::get($this->getMedia('choices'), $i)?->getUrl()]),
             ],
 
-            ExerciseType::ListenAndRepeat->value => [
+            ExerciseType::ListenAndRepeat => [
                 'recordings' => Arr::map($this->attributes['recordings'], fn($recording, $i) => ['text' => $recording, 'image' => Arr::get($this->getMedia('recordings'), $i)?->getUrl()]),
             ],
             default => $this->attributes,
