@@ -91,7 +91,7 @@ class LetterExerciseController extends Controller
         if ($request->file('question.image'))
             $exercise->addMediaFromRequest('question.image')->toMediaCollection('question-image');
 
-        if ($request->filled('attributes')) {
+        if ($request->filled('attributes.choices')) {
             for ($i = 0; $i < count($request->get('attributes')['choices']); $i++)
                 if ($request->type === ExerciseType::MultipleChoice->value && $request->file("attributes.choices.$i.image"))
                     $exercise->addMediaFromRequest("attributes.choices.$i.image")->withCustomProperties(['index' => $i])->toMediaCollection('choices');
