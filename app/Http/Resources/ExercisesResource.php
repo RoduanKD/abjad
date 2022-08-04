@@ -6,6 +6,7 @@ use App\Enums\ExerciseType;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 
+/* @mixin \App\Models\Exercise */
 class ExercisesResource extends JsonResource
 {
     /**
@@ -29,7 +30,7 @@ class ExercisesResource extends JsonResource
         $data['attributes'] = match ($this->type) {
             ExerciseType::MultipleChoice => [
                 'correct_choice_index' => $this->attributes['correct_choice_index'],
-                'choices'              => Arr::map($this->attributes['choices'], fn($choice, $i) => ['text' => $choice, 'image' => Arr::get($this->getMedia('choices'), $i)?->getUrl()]),
+                'choices'              => Arr::map($this->attributes['choices'], fn($choice, $i) => ['text' => $choice, 'image' => Arr::get($this->getMedia('choices'), $i)?->getUrl(), 'voice' => Arr::get($this->getMedia('recordings'), $i)?->getUrl()]),
             ],
 
             ExerciseType::ListenAndRepeat => [

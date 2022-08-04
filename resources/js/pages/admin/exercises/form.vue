@@ -90,18 +90,25 @@
                         />
                       </v-radio-group>
                     </v-col>
-                    <v-col cols="5">
+                    <v-col cols="3">
                       <v-text-field
                         v-model="choice.text"
                         :label="$t('forms.columns.text')"
                         :error-messages="errors[`attributes.choices.${i}.text`]"
                       />
                     </v-col>
-                    <v-col cols="5">
+                    <v-col cols="4">
                       <v-file-input
                         v-model="choice.image"
                         :label="$t('forms.columns.image')"
                         :error-messages="errors[`attributes.choices.${i}.image`]"
+                      />
+                    </v-col>
+                    <v-col cols="4">
+                      <v-file-input
+                        v-model="choice.voice"
+                        :label="$t('forms.columns.voice')"
+                        :error-messages="errors[`attributes.choices.${i}.voice`]"
                       />
                     </v-col>
                   </v-row>

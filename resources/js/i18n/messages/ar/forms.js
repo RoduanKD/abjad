@@ -33,6 +33,7 @@ export default {
       voice: 'تسجيل السؤال',
       image: 'صورة السؤال',
     },
+    voice: 'تسجيل',
   },
   option: 'خيار',
 }
