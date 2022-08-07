@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\ChildController;
 use App\Http\Controllers\Api\LetterController;
 use App\Http\Controllers\Api\LetterExerciseController;
 use App\Http\Controllers\SubmissionController;
@@ -32,6 +33,7 @@ Route::group([
 ], function () {
     Route::apiResource('letters', LetterController::class)->only(['index']);
     Route::apiResource('letters.exercises', LetterExerciseController::class);
+    Route::apiResource('children', ChildController::class)->only(['index', 'store']);
     Route::post('exercises/{exercise}/submissions', [SubmissionController::class, 'store']);
 });
 

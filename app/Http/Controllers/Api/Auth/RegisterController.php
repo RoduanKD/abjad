@@ -15,7 +15,7 @@ class RegisterController extends Controller
         /* @var \App\Models\Child $child */
         $child = $user->children()->create($request->get('child'));
         if ($request->file('child.image'))
-            $child->addMediaFromRequest('child.image');
+            $child->addMediaFromRequest('child.image')->toMediaCollection('profile');
 
         return new CreatedUserResource($user);
     }

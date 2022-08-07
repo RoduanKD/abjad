@@ -26,7 +26,15 @@ class Child extends Model implements HasMedia
 
     public function initials(): Attribute
     {
-        return Attribute::get(fn() => Str::of($this->name)->explode(' ')->map(fn($word) => $word[0])->implode(''));
+        return Attribute::get(fn() => Str::of($this->name)->explode(' ')->map(fn($word) => Str::substr($word, 0, 1))->implode(''));
+    }
+
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => ucwords($value),
+            set: fn($value) => strtolower($value),
+        );
     }
 
     public function registerMediaCollections(): void

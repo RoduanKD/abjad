@@ -34,7 +34,7 @@ class ExercisesResource extends JsonResource
             ],
 
             ExerciseType::ListenAndRepeat => [
-                'recordings' => Arr::map($this->attributes['recordings'], fn($recording, $i) => ['text' => $recording, 'image' => Arr::get($this->getMedia('recordings'), $i)?->getUrl()]),
+                'recordings' => Arr::map($this->attributes['recordings'], fn($recording, $i) => ['text' => $recording, 'recording' => Arr::get($this->getMedia('recordings'), $i)?->getUrl()]),
             ],
             default => $this->attributes,
         };
