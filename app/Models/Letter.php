@@ -13,7 +13,7 @@ class Letter extends Model
 
     public function exercises()
     {
-        return $this->hasMany(Exercise::class);
+        return $this->hasMany(Exercise::class)->orderBy('order');
     }
 
     public function getRouteKeyName()

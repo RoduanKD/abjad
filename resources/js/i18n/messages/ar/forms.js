@@ -34,6 +34,7 @@ export default {
       image: 'صورة السؤال',
     },
     voice: 'تسجيل',
+    order: 'الترتيب',
   },
   option: 'خيار',
 }

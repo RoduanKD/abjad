@@ -13,7 +13,7 @@ class Exercise extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;
 
-    protected $fillable = ['type', 'question', 'attributes'];
+    protected $fillable = ['type', 'question', 'attributes', 'order'];
 
     protected $casts = [
         'attributes' => 'array',

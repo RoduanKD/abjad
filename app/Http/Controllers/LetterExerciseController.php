@@ -46,6 +46,7 @@ class LetterExerciseController extends Controller
     {
         $request->validate([
             'type'           => ['required', new Enum(ExerciseType::class)],
+            'order'          => 'required|numeric',
             'question'       => 'required|array',
             'question.text'  => 'required|max:255',
             'question.voice' => 'required|mimes:mp3,wav',
@@ -68,6 +69,7 @@ class LetterExerciseController extends Controller
         $data = [
             'type'     => $request->type,
             'question' => $request->question['text'],
+            'order'    => $request->order,
         ];
 
         $data['attributes'] = match ($request->type) {

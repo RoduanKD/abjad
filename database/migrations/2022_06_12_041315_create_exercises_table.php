@@ -17,7 +17,8 @@ return new class extends Migration {
             $table->string('type');
             $table->string('question');
             $table->json('attributes')->nullable();
-            $table->foreignId('letter_id');
+            $table->foreignId('letter_id')->constrained();
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }

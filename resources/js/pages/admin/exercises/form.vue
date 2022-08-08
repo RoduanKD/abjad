@@ -11,13 +11,27 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12">
+              <v-col
+                cols="12"
+                sm="6"
+              >
                 <v-select
                   v-model="form.type"
                   :label="$t('forms.columns.type')"
                   :error-messages="errors['type']"
                   :items="types"
                   required
+                />
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-text-field
+                  v-model="form.order"
+                  :label="$t('forms.columns.order')"
+                  :error-messages="errors['order']"
+                  type="numeric"
                 />
               </v-col>
               <v-col cols="12">
