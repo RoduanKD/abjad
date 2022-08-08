@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Exercise\Actions\ExerciseAnswerValidator;
 use App\Enums\ExerciseType;
+use App\Models\Child;
 use App\Models\Exercise;
 use Illuminate\Http\Request;
 
@@ -24,6 +25,7 @@ class SubmissionController extends Controller
                     ExerciseType::DrawLetter => '|file|image|mimes:jpg|dimensions:width:320,height:320',
                     ExerciseType::ListenAndRepeat => '|file|mimes:wav',
                 },
+            'child'  => 'required|exists:children,id,user_id,' . auth()->id(),
         ];
 
         if ($exercise->type === ExerciseType::ListenAndRepeat)
@@ -38,9 +40,8 @@ class SubmissionController extends Controller
         $result = $validator->validateRaw($value);
 
         if ($exercise->id === $exercise->letter->exercises()->get('id')->last()->id && $result) {
-            /* @var \App\Models\User $user */
-            $user = auth()->user();
-            $user->children->first()->finishedLetters()->firstOrCreate(['letter_id' => $exercise->letter_id]);
+            $child = Child::find($request->child);
+            $child->finishedLetters()->firstOrCreate(['letter_id' => $exercise->letter_id]);
         }
 
         return ['correct' => $result];

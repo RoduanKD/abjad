@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Api\ChildrenResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CreatedUserResource extends JsonResource
@@ -15,9 +16,9 @@ class CreatedUserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'  => $this->name,
-            'email' => $this->email,
-            'child' => new ChildResource($this->children->first()),
+            'name'     => $this->name,
+            'email'    => $this->email,
+            'children' => ChildrenResource::collection($this->children),
         ];
     }
 }

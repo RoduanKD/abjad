@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\CreatedUserResource;
 
 class LoginController extends Controller
 {
@@ -17,6 +18,7 @@ class LoginController extends Controller
             'message' => __('auth.welcome'),
             'data'    => [
                 'token' => $token->plainTextToken,
+                'user'  => CreatedUserResource::make($request->user()),
             ],
         ];
     }

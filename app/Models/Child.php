@@ -54,10 +54,10 @@ class Child extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $initials = $this->initials;
+        $image = $this->is_male ? 'boy' : 'girl';
         $this
             ->addMediaCollection('profile')
             ->singleFile()
-            ->useFallbackUrl("https://via.placeholder.com/100?text={$initials}");
+            ->useFallbackUrl("https://abjad.test/storage/kids/{$image}.svg");
     }
 }
