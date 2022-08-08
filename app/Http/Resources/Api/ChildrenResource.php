@@ -16,10 +16,12 @@ class ChildrenResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'      => $this->name,
-            'is_male'   => $this->is_male,
-            'birthdate' => $this->birthdate,
-            'image'     => $this->getFirstMediaUrl('profile'),
+            'name'         => $this->name,
+            'is_male'      => $this->is_male,
+            'birthdate'    => $this->birthdate,
+            'level'        => $this->level,
+            'points_count' => $this->points_count,
+            'image'        => $this->getFirstMediaUrl('profile'),
         ];
     }
 }

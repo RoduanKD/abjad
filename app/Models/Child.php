@@ -24,6 +24,11 @@ class Child extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
+    public function finishedLetters()
+    {
+        return $this->hasMany(FinishedLetter::class);
+    }
+
     public function initials(): Attribute
     {
         return Attribute::get(fn() => Str::of($this->name)->explode(' ')->map(fn($word) => Str::substr($word, 0, 1))->implode(''));
@@ -35,6 +40,16 @@ class Child extends Model implements HasMedia
             get: fn($value) => ucwords($value),
             set: fn($value) => strtolower($value),
         );
+    }
+
+    public function pointsCount(): Attribute
+    {
+        return Attribute::get(fn() => $this->finishedLetters()->count() * 10);
+    }
+
+    public function level(): Attribute
+    {
+        return Attribute::get(fn() => $this->points_count / 10);
     }
 
     public function registerMediaCollections(): void

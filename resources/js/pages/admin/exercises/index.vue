@@ -25,10 +25,10 @@
       >
         <v-card>
           <v-card-title>
-            {{ $t('forms.columns.type') }}: {{ exercise.type }}
+            {{ exercise.question }}
           </v-card-title>
           <v-card-text>
-            {{ exercise.question }}
+            {{ $t('forms.columns.type') }}: {{ exercise.type }}
           </v-card-text>
         </v-card>
       </v-col>

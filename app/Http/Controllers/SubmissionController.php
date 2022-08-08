@@ -37,6 +37,12 @@ class SubmissionController extends Controller
             $validator->withExtraData(['letter' => $request->letter]);
         $result = $validator->validateRaw($value);
 
+        if ($exercise->id === $exercise->letter->exercises()->get('id')->last()->id && $result) {
+            /* @var \App\Models\User $user */
+            $user = auth()->user();
+            $user->children->first()->finishedLetters()->firstOrCreate(['letter_id' => $exercise->letter_id]);
+        }
+
         return ['correct' => $result];
     }
 }
